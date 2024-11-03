@@ -1,0 +1,122 @@
+﻿using CRUDfaculta.DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace CRUDfaculta.DataAccess
+{
+    public static class Seed
+    {
+        public static void GenerateSeed(this ModelBuilder modelBuilder)
+        {
+            var employees = new[]
+            {
+                new Employee { EmployeeId = 1, FullName = "Andrei Popescu", BirthDate = new DateTime(1996, 6, 2), Age = 27, Department = "Sales", PhoneNumber = "+40-712-123456" },
+                new Employee { EmployeeId = 2, FullName = "Maria Ionescu", BirthDate = new DateTime(1990, 5, 10), Age = 33, Department = "HR", PhoneNumber = "+40-712-234567" },
+                new Employee { EmployeeId = 3, FullName = "Ion Vasilescu", BirthDate = new DateTime(1985, 3, 22), Age = 38, Department = "Engineering", PhoneNumber = "+40-712-345678" },
+                new Employee { EmployeeId = 4, FullName = "Elena Dumitrescu", BirthDate = new DateTime(1992, 8, 15), Age = 31, Department = "Marketing", PhoneNumber = "+40-712-456789" },
+                new Employee { EmployeeId = 5, FullName = "Alexandru Stan", BirthDate = new DateTime(1988, 1, 10), Age = 35, Department = "Sales", PhoneNumber = "+40-712-567890" },
+                new Employee { EmployeeId = 6, FullName = "Cristina Radulescu", BirthDate = new DateTime(1994, 9, 20), Age = 29, Department = "HR", PhoneNumber = "+40-712-678901" },
+                new Employee { EmployeeId = 7, FullName = "Florin Georgescu", BirthDate = new DateTime(1987, 7, 30), Age = 36, Department = "Engineering", PhoneNumber = "+40-712-789012" },
+                new Employee { EmployeeId = 8, FullName = "Ioana Mihai", BirthDate = new DateTime(1995, 12, 5), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-890123" },
+                new Employee { EmployeeId = 9, FullName = "Radu Marinescu", BirthDate = new DateTime(1989, 11, 25), Age = 34, Department = "Sales", PhoneNumber = "+40-712-901234" },
+                new Employee { EmployeeId = 10, FullName = "Gabriela Olaru", BirthDate = new DateTime(1993, 2, 14), Age = 30, Department = "HR", PhoneNumber = "+40-712-123789" },
+                new Employee { EmployeeId = 11, FullName = "Mihai Dobre", BirthDate = new DateTime(1980, 9, 19), Age = 43, Department = "Engineering", PhoneNumber = "+40-712-234890" },
+                new Employee { EmployeeId = 12, FullName = "Ana Morar", BirthDate = new DateTime(1991, 4, 9), Age = 32, Department = "Marketing", PhoneNumber = "+40-712-345901" },
+                new Employee { EmployeeId = 13, FullName = "Dragos Barbu", BirthDate = new DateTime(1986, 8, 8), Age = 37, Department = "Sales", PhoneNumber = "+40-712-456012" },
+                new Employee { EmployeeId = 14, FullName = "Diana Voinea", BirthDate = new DateTime(1984, 3, 13), Age = 39, Department = "HR", PhoneNumber = "+40-712-567123" },
+                new Employee { EmployeeId = 15, FullName = "George Petrescu", BirthDate = new DateTime(1990, 7, 17), Age = 33, Department = "Engineering", PhoneNumber = "+40-712-678234" },
+                new Employee { EmployeeId = 16, FullName = "Adina Roman", BirthDate = new DateTime(1995, 1, 23), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-789345" },
+                new Employee { EmployeeId = 17, FullName = "Vlad Neagu", BirthDate = new DateTime(1993, 10, 3), Age = 30, Department = "Sales", PhoneNumber = "+40-712-890456" },
+                new Employee { EmployeeId = 18, FullName = "Alina Iacob", BirthDate = new DateTime(1992, 5, 6), Age = 31, Department = "HR", PhoneNumber = "+40-712-901567" },
+                new Employee { EmployeeId = 19, FullName = "Bogdan Tudor", BirthDate = new DateTime(1981, 12, 12), Age = 42, Department = "Engineering", PhoneNumber = "+40-712-123678" },
+                new Employee { EmployeeId = 20, FullName = "Anca Pavel", BirthDate = new DateTime(1989, 6, 18), Age = 34, Department = "Marketing", PhoneNumber = "+40-712-234789" },
+                new Employee { EmployeeId = 21, FullName = "Cosmin Stanescu", BirthDate = new DateTime(1991, 9, 4), Age = 32, Department = "Sales", PhoneNumber = "+40-712-345890" },
+                new Employee { EmployeeId = 22, FullName = "Simona Moraru", BirthDate = new DateTime(1988, 4, 28), Age = 35, Department = "HR", PhoneNumber = "+40-712-456901" },
+                new Employee { EmployeeId = 23, FullName = "Lucian Pavel", BirthDate = new DateTime(1979, 12, 15), Age = 44, Department = "Engineering", PhoneNumber = "+40-712-567012" },
+                new Employee { EmployeeId = 24, FullName = "Raluca Balan", BirthDate = new DateTime(1994, 8, 7), Age = 29, Department = "Marketing", PhoneNumber = "+40-712-678123" },
+                new Employee { EmployeeId = 25, FullName = "Stefan Dumitru", BirthDate = new DateTime(1986, 5, 18), Age = 37, Department = "Sales", PhoneNumber = "+40-712-789234" },
+                new Employee { EmployeeId = 26, FullName = "Daniela Ciobanu", BirthDate = new DateTime(1992, 11, 11), Age = 31, Department = "HR", PhoneNumber = "+40-712-890345" },
+                new Employee { EmployeeId = 27, FullName = "Paul Trifan", BirthDate = new DateTime(1983, 1, 22), Age = 40, Department = "Engineering", PhoneNumber = "+40-712-901456" },
+                new Employee { EmployeeId = 28, FullName = "Madalina Gabor", BirthDate = new DateTime(1990, 6, 30), Age = 33, Department = "Marketing", PhoneNumber = "+40-712-123567" },
+                new Employee { EmployeeId = 29, FullName = "Nicolae Stefan", BirthDate = new DateTime(1987, 10, 5), Age = 36, Department = "Sales", PhoneNumber = "+40-712-234678" },
+                new Employee { EmployeeId = 30, FullName = "Laura Avram", BirthDate = new DateTime(1993, 3, 12), Age = 30, Department = "HR", PhoneNumber = "+40-712-345789" },
+                new Employee { EmployeeId = 31, FullName = "Sorin Radu", BirthDate = new DateTime(1984, 12, 1), Age = 39, Department = "Engineering", PhoneNumber = "+40-712-456890" },
+                new Employee { EmployeeId = 32, FullName = "Bianca Stancu", BirthDate = new DateTime(1996, 7, 21), Age = 27, Department = "Marketing", PhoneNumber = "+40-712-567901" },
+                new Employee { EmployeeId = 33, FullName = "Claudiu Ion", BirthDate = new DateTime(1989, 2, 17), Age = 34, Department = "Sales", PhoneNumber = "+40-712-678012" },
+                new Employee { EmployeeId = 34, FullName = "Georgiana Pavel", BirthDate = new DateTime(1995, 9, 27), Age = 28, Department = "HR", PhoneNumber = "+40-712-789123" },
+                new Employee { EmployeeId = 35, FullName = "Mircea Olteanu", BirthDate = new DateTime(1991, 6, 19), Age = 32, Department = "Engineering", PhoneNumber = "+40-712-890234" },
+                new Employee { EmployeeId = 36, FullName = "Liliana Nastase", BirthDate = new DateTime(1992, 12, 8), Age = 31, Department = "Marketing", PhoneNumber = "+40-712-901345" },
+                new Employee { EmployeeId = 37, FullName = "Valentin Cernat", BirthDate = new DateTime(1985, 3, 14), Age = 38, Department = "Sales", PhoneNumber = "+40-712-123456" },
+                new Employee { EmployeeId = 38, FullName = "Nicoleta Tanase", BirthDate = new DateTime(1987, 8, 25), Age = 36, Department = "HR", PhoneNumber = "+40-712-234567" },
+                new Employee { EmployeeId = 39, FullName = "Sergiu Grosu", BirthDate = new DateTime(1994, 5, 16), Age = 29, Department = "Engineering", PhoneNumber = "+40-712-345678" },
+                new Employee { EmployeeId = 40, FullName = "Monica Toma", BirthDate = new DateTime(1986, 4, 3), Age = 37, Department = "Marketing", PhoneNumber = "+40-712-456789" },
+                new Employee { EmployeeId = 41, FullName = "Andrei Marinescu", BirthDate = new DateTime(1988, 9, 12), Age = 35, Department = "Sales", PhoneNumber = "+40-712-567890" },
+                new Employee { EmployeeId = 42, FullName = "Mirela Pavel", BirthDate = new DateTime(1992, 3, 28), Age = 31, Department = "HR", PhoneNumber = "+40-712-678901" },
+                new Employee { EmployeeId = 43, FullName = "Radu Dumitrescu", BirthDate = new DateTime(1987, 7, 30), Age = 36, Department = "Engineering", PhoneNumber = "+40-712-789012" },
+                new Employee { EmployeeId = 44, FullName = "Gabriela Moldovan", BirthDate = new DateTime(1995, 2, 18), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-890123" },
+                new Employee { EmployeeId = 45, FullName = "Bogdan Ionescu", BirthDate = new DateTime(1990, 10, 7), Age = 33, Department = "Sales", PhoneNumber = "+40-712-901234" },
+                new Employee { EmployeeId = 46, FullName = "Alina Popa", BirthDate = new DateTime(1993, 4, 14), Age = 30, Department = "HR", PhoneNumber = "+40-712-123789" },
+                new Employee { EmployeeId = 47, FullName = "Mihai Stan", BirthDate = new DateTime(1985, 1, 19), Age = 38, Department = "Engineering", PhoneNumber = "+40-712-234890" },
+                new Employee { EmployeeId = 48, FullName = "Oana Toma", BirthDate = new DateTime(1991, 5, 23), Age = 32, Department = "Marketing", PhoneNumber = "+40-712-345901" },
+                new Employee { EmployeeId = 49, FullName = "Cristian Gheorghe", BirthDate = new DateTime(1986, 9, 11), Age = 37, Department = "Sales", PhoneNumber = "+40-712-456012" },
+                new Employee { EmployeeId = 50, FullName = "Elena Radu", BirthDate = new DateTime(1989, 3, 5), Age = 34, Department = "HR", PhoneNumber = "+40-712-567123" },
+                new Employee { EmployeeId = 51, FullName = "George Vasilescu", BirthDate = new DateTime(1992, 8, 15), Age = 31, Department = "Engineering", PhoneNumber = "+40-712-678234" },
+                new Employee { EmployeeId = 52, FullName = "Simona Neagu", BirthDate = new DateTime(1994, 10, 6), Age = 29, Department = "Marketing", PhoneNumber = "+40-712-789345" },
+                new Employee { EmployeeId = 53, FullName = "Lucian Enache", BirthDate = new DateTime(1988, 11, 4), Age = 35, Department = "Sales", PhoneNumber = "+40-712-890456" },
+                new Employee { EmployeeId = 54, FullName = "Daniela Pop", BirthDate = new DateTime(1993, 7, 13), Age = 30, Department = "HR", PhoneNumber = "+40-712-901567" },
+                new Employee { EmployeeId = 55, FullName = "Florin Vasile", BirthDate = new DateTime(1991, 2, 25), Age = 32, Department = "Engineering", PhoneNumber = "+40-712-123678" },
+                new Employee { EmployeeId = 56, FullName = "Ana Dragan", BirthDate = new DateTime(1989, 6, 18), Age = 34, Department = "Marketing", PhoneNumber = "+40-712-234789" },
+                new Employee { EmployeeId = 57, FullName = "Rares Constantin", BirthDate = new DateTime(1995, 1, 23), Age = 28, Department = "Sales", PhoneNumber = "+40-712-345890" },
+                new Employee { EmployeeId = 58, FullName = "Iulia Nistor", BirthDate = new DateTime(1992, 5, 16), Age = 31, Department = "HR", PhoneNumber = "+40-712-456901" },
+                new Employee { EmployeeId = 59, FullName = "Dorin Luca", BirthDate = new DateTime(1980, 9, 29), Age = 43, Department = "Engineering", PhoneNumber = "+40-712-567012" },
+                new Employee { EmployeeId = 60, FullName = "Diana Tudor", BirthDate = new DateTime(1994, 12, 10), Age = 29, Department = "Marketing", PhoneNumber = "+40-712-678123" },
+                new Employee { EmployeeId = 61, FullName = "Adrian Serban", BirthDate = new DateTime(1983, 4, 15), Age = 40, Department = "Sales", PhoneNumber = "+40-712-789234" },
+                new Employee { EmployeeId = 62, FullName = "Raluca Petre", BirthDate = new DateTime(1990, 7, 20), Age = 33, Department = "HR", PhoneNumber = "+40-712-890345" },
+                new Employee { EmployeeId = 63, FullName = "Sorin Barbu", BirthDate = new DateTime(1985, 2, 8), Age = 38, Department = "Engineering", PhoneNumber = "+40-712-901456" },
+                new Employee { EmployeeId = 64, FullName = "Oana Radulescu", BirthDate = new DateTime(1988, 11, 1), Age = 35, Department = "Marketing", PhoneNumber = "+40-712-123567" },
+                new Employee { EmployeeId = 65, FullName = "Ion Balan", BirthDate = new DateTime(1993, 6, 26), Age = 30, Department = "Sales", PhoneNumber = "+40-712-234678" },
+                new Employee { EmployeeId = 66, FullName = "Cristina Moraru", BirthDate = new DateTime(1991, 3, 30), Age = 32, Department = "HR", PhoneNumber = "+40-712-345789" },
+                new Employee { EmployeeId = 67, FullName = "Roxana Cojocaru", BirthDate = new DateTime(1990, 9, 5), Age = 33, Department = "Engineering", PhoneNumber = "+40-712-456890" },
+                new Employee { EmployeeId = 68, FullName = "Mihai Cernat", BirthDate = new DateTime(1987, 7, 14), Age = 36, Department = "Marketing", PhoneNumber = "+40-712-567901" },
+                new Employee { EmployeeId = 69, FullName = "Valentin Albu", BirthDate = new DateTime(1982, 5, 27), Age = 41, Department = "Sales", PhoneNumber = "+40-712-678012" },
+                new Employee { EmployeeId = 70, FullName = "Gabriela Popescu", BirthDate = new DateTime(1995, 8, 16), Age = 28, Department = "HR", PhoneNumber = "+40-712-789123" },
+                new Employee { EmployeeId = 71, FullName = "Paul Mocanu", BirthDate = new DateTime(1989, 12, 4), Age = 34, Department = "Engineering", PhoneNumber = "+40-712-890234" },
+                new Employee { EmployeeId = 72, FullName = "Liliana Chirila", BirthDate = new DateTime(1992, 1, 19), Age = 31, Department = "Marketing", PhoneNumber = "+40-712-901345" },
+                new Employee { EmployeeId = 73, FullName = "Dragos Mihai", BirthDate = new DateTime(1984, 3, 12), Age = 39, Department = "Sales", PhoneNumber = "+40-712-123456" },
+                new Employee { EmployeeId = 74, FullName = "Adriana Dumitrescu", BirthDate = new DateTime(1986, 10, 5), Age = 37, Department = "HR", PhoneNumber = "+40-712-234567" },
+                new Employee { EmployeeId = 75, FullName = "Bogdan Roman", BirthDate = new DateTime(1991, 11, 22), Age = 32, Department = "Engineering", PhoneNumber = "+40-712-345678" },
+                new Employee { EmployeeId = 76, FullName = "Elena Ciobanu", BirthDate = new DateTime(1994, 6, 7), Age = 29, Department = "Marketing", PhoneNumber = "+40-712-456789" },
+                new Employee { EmployeeId = 77, FullName = "George Stanciu", BirthDate = new DateTime(1987, 5, 14), Age = 36, Department = "Sales", PhoneNumber = "+40-712-567890" },
+                new Employee { EmployeeId = 78, FullName = "Silvia Gheorghita", BirthDate = new DateTime(1993, 7, 9), Age = 30, Department = "HR", PhoneNumber = "+40-712-678901" },
+                new Employee { EmployeeId = 79, FullName = "Ionut Avram", BirthDate = new DateTime(1981, 12, 27), Age = 42, Department = "Engineering", PhoneNumber = "+40-712-789012" },
+                new Employee { EmployeeId = 80, FullName = "Maria Dima", BirthDate = new DateTime(1995, 9, 3), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-890123" },
+                new Employee { EmployeeId = 81, FullName = "Stefan Udrea", BirthDate = new DateTime(1982, 8, 30), Age = 41, Department = "Sales", PhoneNumber = "+40-712-901234" },
+                new Employee { EmployeeId = 82, FullName = "Ileana Costea", BirthDate = new DateTime(1990, 3, 21), Age = 33, Department = "HR", PhoneNumber = "+40-712-123789" },
+                new Employee { EmployeeId = 83, FullName = "Dumitru Grigore", BirthDate = new DateTime(1989, 6, 12), Age = 34, Department = "Engineering", PhoneNumber = "+40-712-234890" },
+                new Employee { EmployeeId = 84, FullName = "Ana Irimia", BirthDate = new DateTime(1991, 10, 4), Age = 32, Department = "Marketing", PhoneNumber = "+40-712-345901" },
+                new Employee { EmployeeId = 85, FullName = "Ion Stan", BirthDate = new DateTime(1985, 1, 16), Age = 38, Department = "Sales", PhoneNumber = "+40-712-456012" },
+                new Employee { EmployeeId = 86, FullName = "Bianca Lupu", BirthDate = new DateTime(1988, 11, 7), Age = 35, Department = "HR", PhoneNumber = "+40-712-567123" },
+                new Employee { EmployeeId = 87, FullName = "Nicolae Anghel", BirthDate = new DateTime(1992, 12, 14), Age = 31, Department = "Engineering", PhoneNumber = "+40-712-678234" },
+                new Employee { EmployeeId = 88, FullName = "Anca Albu", BirthDate = new DateTime(1994, 7, 25), Age = 29, Department = "Marketing", PhoneNumber = "+40-712-789345" },
+                new Employee { EmployeeId = 89, FullName = "Marius Badea", BirthDate = new DateTime(1986, 2, 19), Age = 37, Department = "Sales", PhoneNumber = "+40-712-890456" },
+                new Employee { EmployeeId = 90, FullName = "Eugenia Chiriac", BirthDate = new DateTime(1993, 9, 30), Age = 30, Department = "HR", PhoneNumber = "+40-712-901567" },
+                new Employee { EmployeeId = 91, FullName = "Cosmin Raducanu", BirthDate = new DateTime(1990, 5, 2), Age = 33, Department = "Engineering", PhoneNumber = "+40-712-123678" },
+                new Employee { EmployeeId = 92, FullName = "Daniela Iliescu", BirthDate = new DateTime(1995, 1, 27), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-234789" },
+                new Employee { EmployeeId = 93, FullName = "Petre Tomescu", BirthDate = new DateTime(1983, 7, 3), Age = 40, Department = "Sales", PhoneNumber = "+40-712-345890" },
+                new Employee { EmployeeId = 94, FullName = "Lavinia Roman", BirthDate = new DateTime(1991, 4, 18), Age = 32, Department = "HR", PhoneNumber = "+40-712-456901" },
+                new Employee { EmployeeId = 95, FullName = "Stefan Fodor", BirthDate = new DateTime(1987, 11, 23), Age = 36, Department = "Engineering", PhoneNumber = "+40-712-567012" },
+                new Employee { EmployeeId = 96, FullName = "Ioana Pavel", BirthDate = new DateTime(1993, 2, 9), Age = 30, Department = "Marketing", PhoneNumber = "+40-712-678123" },
+                new Employee { EmployeeId = 97, FullName = "Octavian Dragu", BirthDate = new DateTime(1988, 6, 11), Age = 35, Department = "Sales", PhoneNumber = "+40-712-789234" },
+                new Employee { EmployeeId = 98, FullName = "Nicoleta Banciu", BirthDate = new DateTime(1992, 9, 13), Age = 31, Department = "HR", PhoneNumber = "+40-712-890345" },
+                new Employee { EmployeeId = 99, FullName = "Darius Matei", BirthDate = new DateTime(1990, 8, 21), Age = 33, Department = "Engineering", PhoneNumber = "+40-712-901456" },
+                new Employee { EmployeeId = 100, FullName = "Larisa Calin", BirthDate = new DateTime(1995, 3, 10), Age = 28, Department = "Marketing", PhoneNumber = "+40-712-123567" }
+
+        };
+
+            foreach(var employee in employees)
+            {
+                modelBuilder.Entity<Employee>().HasData(employee);
+            }
+        }
+    }
+}
+
