@@ -1,4 +1,5 @@
 ﻿@using CRUDfaculta.Controllers
+@using CRUDfaculta.Enum
 @using CRUDfaculta.ViewModels
 
 @inject EmployeeController EmployeeController
@@ -28,18 +29,37 @@
 </EditForm>
 
 @code{
+	[Parameter]
+	public UiActionEnum Action { get; set; } = UiActionEnum.Insert;
+
 	[CascadingParameter]
 	private MudDialogInstance MudDialog { get; set; }
 
+	[Parameter]
 	public DateTime? _birthDate { get; set; } = DateTime.Today;
+
+	[Parameter]
 	public EmployeeViewModel model { get; set; } = new EmployeeViewModel();
 
 	private async Task OnValidSubmit(EditContext editContext)
 	{
-		if(_birthDate is not null)
+		if (_birthDate is not null)
 		{
 			model.BirthDate = _birthDate.Value;
 		}
+		if (Action == UiActionEnum.Insert)
+		{
+			CreateEmployee();
+		}
+		else if (Action == UiActionEnum.Update)
+		{
+			EditEmployee();
+		}
+	}
+
+
+	private void CreateEmployee()
+	{
 		var result = EmployeeController.CreateNewEmployee(model);
 		if (result)
 		{
@@ -49,6 +69,20 @@
 		else
 		{
 			SnackBar.Add("Failed to create employee", Severity.Error);
+		}
+	}
+
+	private void EditEmployee()
+	{
+		var result = EmployeeController.EditEmployee(model);
+		if (result)
+		{
+			SnackBar.Add("Employee updated Succesfully", Severity.Success);
+			MudDialog.Close();
+		}
+		else
+		{
+			SnackBar.Add("Failed to edit employee", Severity.Error);
 		}
 	}
 

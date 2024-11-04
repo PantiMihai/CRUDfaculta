@@ -5,7 +5,7 @@
 @inject HttpClient Http
 @inject EmployeeController EmployeeController
 @inject IDialogService DialogService
-
+@inject ISnackbar SnackBar
 @rendermode InteractiveServer
 <PageTitle>Employee Manager</PageTitle>
 
@@ -30,6 +30,25 @@
             <PropertyColumn Property="x => x.BirthDate" Title="Birth date" Format="dd MM yyyy " />
             <PropertyColumn Property="x => x.Age" Title="Age" />
             <PropertyColumn Property="x => x.PhoneNumber" Title="Phone number" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                    <MudButton Class="me-2 w-50"
+                               Size="@Size.Small"
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Outlined.Edit"
+                               Color="Color.Warning" OnClick="@(()=> this.EditEmployee(context))">
+                        Edit
+                    </MudButton>
+
+                    <MudButton Class="w-50"
+                               Size="@Size.Small"
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Outlined.Delete"
+                               Color="Color.Error" OnClick="@(()=> this.DeleteEmployee(context))">
+                       Delete
+                    </MudButton>
+                    </CellTemplate>
+                </TemplateColumn>
         </Columns>
         <PagerContent>
             <MudDataGridPager T="EmployeeViewModel" />
@@ -119,13 +138,69 @@
     private async Task CreateNewUser()
     {
         var options = new DialogOptions { MaxWidth = MaxWidth.Large };
-        var dialog = await DialogService.ShowAsync<CreateEmployee>("Add Employee", options);
+        var parameters = new DialogParameters<CreateEmployeeDialog>
+        {
+            { x=> x.Action, CRUDfaculta.Enum.UiActionEnum.Insert},
+              { x=> x.model,new EmployeeViewModel()}
+        };
+        var dialog = await DialogService.ShowAsync<CreateEmployeeDialog>("Add Employee", options);
         var result = await dialog.Result;
 
         if(result != null && !result.Canceled)
         {
             await dataGrid.ReloadServerData();
         }
-         
+
+    }
+
+    private async Task EditEmployee(CellContext<EmployeeViewModel> employee)
+    {
+        var employeeView = EmployeeController.FindEmployeeById(employee.Item.EmployeeId);
+        if (employeeView is null)
+        {
+            SnackBar.Add("Something went wrong searching for the employee", Severity.Warning);
+            return;
+        }
+
+
+        var options = new DialogOptions { MaxWidth = MaxWidth.Large };
+        var parameters = new DialogParameters<CreateEmployeeDialog>
+        {
+            { x=> x.Action, CRUDfaculta.Enum.UiActionEnum.Update},
+              { x=> x.model,employeeView},
+               { x=> x._birthDate,employeeView.BirthDate}
+        };
+        var dialog = await DialogService.ShowAsync<CreateEmployeeDialog>("Edit Employee",parameters, options);
+        var result = await dialog.Result;
+
+        if (result != null && !result.Canceled)
+        {
+            await dataGrid.ReloadServerData();
+        }
+
+    }
+
+    private async Task DeleteEmployee(CellContext<EmployeeViewModel> employee)
+    {
+        var dialog = await DialogService.ShowAsync<RemoveEmployeeDialog>("Remove: " + employee.Item.FullName);
+        var result = await dialog.Result;
+
+        if(result is not null && !result.Canceled)
+        {
+            var confirmed = (bool)(result.Data ?? false);
+            if (confirmed)
+            {
+                var delete= EmployeeController.DeleteEmployee(employee.Item.EmployeeId);
+                if (delete)
+                {
+                    SnackBar.Add("Succesfully Deleted ${employee.Item.FullName}", Severity.Success);
+                    await dataGrid.ReloadServerData();
+                }
+                else
+                {
+                    SnackBar.Add("Failed to remove employee", Severity.Error);
+                }
+            }
+        }
     }
 }

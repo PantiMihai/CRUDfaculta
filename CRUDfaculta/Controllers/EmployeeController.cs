@@ -49,34 +49,63 @@ namespace CRUDfaculta.Controllers
             }
         }
 
-
-       /* //add employee
-        public async Task<Employee> AddEmployee(EmployeeViewModel employeeModel)
+        public EmployeeViewModel? FindEmployeeById(int employeeId)
         {
-            var employee = new Employee
+            var employee = dbContext.Employees.Find(employeeId);
+
+            if (employee == null)
+                return null;
+
+            EmployeeViewModel result = new EmployeeViewModel
             {
-                EmployeeId = employeeModel.EmployeeId,
-                FullName = employeeModel.FullName,
-                Department = employeeModel.Department,
-                BirthDate = employeeModel.BirthDate,
-                Age = employeeModel.Age,
-                PhoneNumber = employeeModel.PhoneNumber
+                EmployeeId = employee.EmployeeId,
+                FullName = employee.FullName,
+                Department = employee.Department,
+                BirthDate = employee.BirthDate,
+                Age = employee.Age,
+                PhoneNumber = employee.PhoneNumber,
             };
-            dbContext.Employees.Add(employee);
-            await dbContext.SaveChangesAsync();
-            return employee;
+            return result;
         }
-        //delete employee
-        public async Task<bool> DeleteEmployee(int employeeId)
+      
+        public bool EditEmployee(EmployeeViewModel model)
         {
-            var employee = await dbContext.Employees.FindAsync(employeeId);
-            if(employee == null) 
+            try
+            {
+                var employee = dbContext.Employees.Find(model.EmployeeId);
+                if (employee == null) return false;
+
+                employee.FullName = model.FullName;
+                employee.Department = model.Department;
+                employee.BirthDate = model.BirthDate;
+                employee.Age = model.Age;
+                employee.PhoneNumber = model.PhoneNumber;
+
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
                 return false;
-            dbContext.Employees.Remove(employee);
-            await dbContext.SaveChangesAsync();
-            return true;
-        }*/
+            }
+         
+        }
 
-
+        public bool DeleteEmployee(int Id)
+        {
+            try
+            {
+                var employee = dbContext.Employees.Find(Id);
+                if (employee == null) return false;
+                dbContext.Employees.Remove(employee);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+           
+        }
     }
 }
