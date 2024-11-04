@@ -2,18 +2,23 @@
 @using System.Threading
 @using CRUDfaculta.Controllers
 @using CRUDfaculta.ViewModels
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject EmployeeController EmployeeController
+@inject IDialogService DialogService
 
 @rendermode InteractiveServer
 <PageTitle>Employee Manager</PageTitle>
+
 
 
 <MudContainer>
 
     <MudDataGrid @ref="dataGrid" T="EmployeeViewModel" ServerData="ServerReload" Filterable="false">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Employee system</MudText>
+            <MudButton StartIcon="@Icons.Material.Outlined.Add" Variant="Variant.Filled" Color="Color.Primary" Class="m-3" @onclick="CreateNewUser">
+                Add New Employee
+            </MudButton>
+            <MudText Typo="Typo.h6">Employees Table</MudText>
             <MudSpacer />
             <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
                           AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -109,5 +114,18 @@
     {
         searchString = text;
         return dataGrid.ReloadServerData();
+    }
+
+    private async Task CreateNewUser()
+    {
+        var options = new DialogOptions { MaxWidth = MaxWidth.Large };
+        var dialog = await DialogService.ShowAsync<CreateEmployee>("Add Employee", options);
+        var result = await dialog.Result;
+
+        if(result != null && !result.Canceled)
+        {
+            await dataGrid.ReloadServerData();
+        }
+         
     }
 }
